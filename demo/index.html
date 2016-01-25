@@ -1,0 +1,42 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>my-comp-team03 Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../my-comp-team03.html">
+  </head>
+  <body unresolved>
+
+    <p>An example of <code>&lt;my-comp-team03&gt;</code>:</p>
+
+    <my-comp-team03 id="cropImageComponent" image-src='http://lorempixel.com/g/300/200/cats/'>
+    </my-comp-team03>
+
+    <button id="cropImage">Crop Image</button>
+    
+    <img id="imageResult">
+    
+    
+    <script>
+      var buttonCropImage = document.getElementById('cropImage');
+      buttonCropImage.addEventListener('click', function(){
+        var cropImageComponent = document.getElementById('cropImageComponent');
+        cropImageComponent.crop(function(data){
+           console.log(data);
+        });
+      });
+    </script>
+
+  </body>
+</html>
