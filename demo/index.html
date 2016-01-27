@@ -24,16 +24,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </my-comp-team03>
 
     <button id="cropImage">Crop Image</button>
-    
+
     <img id="imageResult">
-    
-    
+
+
     <script>
       var buttonCropImage = document.getElementById('cropImage');
       buttonCropImage.addEventListener('click', function(){
         var cropImageComponent = document.getElementById('cropImageComponent');
         cropImageComponent.crop(function(data){
-           console.log(data);
+           var imageResult = document.getElementById('imageResult');
+           imageResult.src = data;
         });
       });
     </script>

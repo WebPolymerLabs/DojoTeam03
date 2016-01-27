@@ -62,7 +62,7 @@ Example:
           //
           // We do that to ensure that each element gets its own copy of the
           // value, rather than having it shared across all instances (via the
-          // prototype).          
+          // prototype).
           }
         },
 
@@ -115,9 +115,11 @@ Example:
        * @return {string} The full greeting.
        */
       crop: function(callback) {
-          $(this.$.image).cropper('getCroppedCanvas').toDataURL(function (blob){
-            callback(blob);
-        });
+        /* https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
+          O método getCroppedCanvas retorna um CanvasElement.
+        */
+        var uri = $(this.$.image).cropper('getCroppedCanvas').toDataURL();
+        callback(uri);
       },
 
       /**
