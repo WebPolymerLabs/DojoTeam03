@@ -15,28 +15,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <title>my-comp-team03 Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="../my-comp-team03.html">
+    <style>
+      .img-preview {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+      }
+      
+      .img-preview-big {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body unresolved>
 
     <p>An example of <code>&lt;my-comp-team03&gt;</code>:</p>
 
-    <my-comp-team03 id="cropImageComponent" image-src='http://lorempixel.com/g/300/200/cats/'>
+    <my-comp-team03 id="cropImageComponent" crop-preview-element=".img-preview" image-src='http://lorempixel.com/g/300/200/cats/'>
     </my-comp-team03>
 
     <button id="cropImage">Crop Image</button>
+
+    <button id="changePreviewSmall">Change Perview Small</button>
+    <button id="changePreviewBig">Change Perview Big</button>
+
+    
+    <div class="img-preview"></div>
+    
+    <div class="img-preview-big"></div>
 
     <img id="imageResult">
 
 
     <script>
       var buttonCropImage = document.getElementById('cropImage');
+      var cropImageComponent = document.getElementById('cropImageComponent');
+
       buttonCropImage.addEventListener('click', function(){
-        var cropImageComponent = document.getElementById('cropImageComponent');
         cropImageComponent.crop(function(data){
            var imageResult = document.getElementById('imageResult');
            imageResult.src = data;
         });
       });
+
+      var buttonChangePreviewSmall = document.getElementById('changePreviewSmall');
+      var buttonChangePreviewBig = document.getElementById('changePreviewBig');
+
+      buttonChangePreviewSmall.addEventListener('click', function () {
+        cropImageComponent.cropPreviewElement = '.img-preview';
+        console.debug('cropImageComponent.cropPreviewElement: ', cropImageComponent.cropPreviewElement);
+      });
+
+      buttonChangePreviewBig.addEventListener('click', function () {
+        cropImageComponent.cropPreviewElement = '.img-preview-big';
+        console.debug('cropImageComponent.cropPreviewElement: ', cropImageComponent.cropPreviewElement);
+      });
+
     </script>
 
   </body>

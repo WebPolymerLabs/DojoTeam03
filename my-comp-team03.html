@@ -9,9 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<script src="../jquery/dist/jquery.js"></script><!-- jQuery is required -->
-<link  href="../cropper/dist/cropper.css" rel="stylesheet">
-<script src="../cropper/dist/cropper.js"></script>
+<link  href="../cropperjs/dist/cropper.css" rel="stylesheet">
+<script src="../cropperjs/dist/cropper.js"></script>
 
 <!--
 An element providing a solution to no problem in particular.
@@ -36,6 +35,8 @@ Example:
       :host {
         display: block;
       }
+      
+      
     </style>
 
     <img id="image" src$="{{imageSrc}}">
@@ -44,7 +45,7 @@ Example:
   <script>
     Polymer({
       is: 'my-comp-team03',
-
+      
       properties: {
         /**
          * Describes the author of the element, but is really just an excuse to
@@ -63,8 +64,14 @@ Example:
           // We do that to ensure that each element gets its own copy of the
           // value, rather than having it shared across all instances (via the
           // prototype).
-          }
+          },
+          cropPreviewElement: {
+            type : String,
+            reflectToAttribute : true,
+            observer : '_initCropper'
+          }          
         },
+
 
       // Element Lifecycle
 
@@ -84,8 +91,17 @@ Example:
         // This is a good place to perform any work related to your element's
         // visual state or active behavior (measuring sizes, beginning animations,
         // loading resources, etc).
-        $(this.$.image).cropper({
-            aspectRatio: 16 / 9,
+        this._initCropper();
+      },
+      
+      _initCropper : function(){
+         if (this.cropInstance){
+           this.cropInstance.destroy();
+           this.cropInstance = null;
+         }
+          
+         this.cropInstance = new Cropper(this.$.image, {
+            preview: this.cropPreviewElement,
             crop: function(e) {
               // Output the result data for cropping image.
               console.log(e.x);
@@ -97,6 +113,7 @@ Example:
               console.log(e.scaleY);
             }
           });
+          console.debug('instance: ', cropInstance);
       },
 
       detached: function() {
