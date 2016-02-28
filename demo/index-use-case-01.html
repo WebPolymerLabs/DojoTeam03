@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>my-comp-team03 Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../paper-material/paper-material.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+    <link rel="import" href="../my-comp-team03.html">
+    <style is="custom-style" include="demo-pages-shared-styles">
+      paper-material {
+        padding-top: 16px;  
+        padding-bottom: 16px;  
+      }
+      
+      paper-material p {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+    </style>    
+    <style>
+      .img-preview {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <template is="dom-bind" id="app">
+      <style is="custom-style">
+        body {
+          background-color: var(--light-primary-color);
+        }
+
+        paper-material {
+          background-color: white;
+          margin: 24px;
+          padding: 16px;
+        }
+      </style>
+      <div class="horizontal-section-container">
+        <div class="vertical-section">
+          <demo-snippet>
+            <my-comp-team03 id="cropImageComponent" crop-preview-element=".img-preview" image-src='http://lorempixel.com/g/300/200/cats/'>
+            </my-comp-team03>
+
+            <div class="img-preview"></div>
+
+            <img id="imageResult">
+          </demo-snippet>
+        </div>
+      </div>
+      <script>
+        
+        window.addEventListener('WebComponentsReady', function() {
+          
+          var app = document.querySelector('#app');
+          var cropImageComponent = document.getElementById('cropImageComponent');
+                    
+        });
+        
+      </script>
+    </template>
+  </body>
+</html>

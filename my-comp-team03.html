@@ -68,11 +68,17 @@ Example:
           cropPreviewElement: {
             type : String,
             reflectToAttribute : true,
-            observer : '_initCropper'
+            observer : '_cropPreviewElementChanged'
           }          
         },
 
-
+      _cropPreviewElementChanged: function() {
+        if (!this._isAttached) {
+          return;
+        }
+        
+        this._initCropper();
+      },  
       // Element Lifecycle
 
       ready: function() {
@@ -91,6 +97,7 @@ Example:
         // This is a good place to perform any work related to your element's
         // visual state or active behavior (measuring sizes, beginning animations,
         // loading resources, etc).
+        this._isAttached = true; 
         this._initCropper();
       },
       
@@ -113,7 +120,6 @@ Example:
               console.log(e.scaleY);
             }
           });
-          console.debug('instance: ', cropInstance);
       },
 
       detached: function() {
@@ -138,23 +144,6 @@ Example:
         var uri = $(this.$.image).cropper('getCroppedCanvas').toDataURL();
         callback(uri);
       },
-
-      /**
-       * The `my-comp-team03-lasers` event is fired whenever `fireLasers` is called.
-       *
-       * @event my-comp-team03-lasers
-       * @detail {{sound: String}}
-       */
-
-      /**
-       * Attempt to destroy this element's enemies with a beam of light!
-       *
-       * Or, at least, dispatch an event in the vain hope that someone else will
-       * do the zapping.
-       */
-      fireLasers: function() {
-        this.fire('my-comp-team03-lasers', {sound: 'Pew pew!'});
-      }
     });
   </script>
 </dom-module>

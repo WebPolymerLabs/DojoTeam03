@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <title>my-comp-team03 Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="../my-comp-team03.html">
+    <script src="../../jquery/dist/jquery.min.js"></script>
     <style>
       .img-preview {
         width: 250px;
@@ -32,6 +33,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <body unresolved>
 
     <p>An example of <code>&lt;my-comp-team03&gt;</code>:</p>
+    
+    <input type="file" id="inputImage" name="file" accept="image/*">
 
     <my-comp-team03 id="cropImageComponent" crop-preview-element=".img-preview" image-src='http://lorempixel.com/g/300/200/cats/'>
     </my-comp-team03>
@@ -72,6 +75,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cropImageComponent.cropPreviewElement = '.img-preview-big';
         console.debug('cropImageComponent.cropPreviewElement: ', cropImageComponent.cropPreviewElement);
       });
+      
+      // Import image
+      var $inputImage = $('#inputImage');
+      var $image = $('#image');
+      var URL = window.URL || window.webkitURL;
+      var blobURL;
+
+      if (URL) {
+        $inputImage.change(function () {
+          var files = this.files;
+          var file;
+
+          if (!$image.data('cropper')) {
+            return;
+          }
+
+          if (files && files.length) {
+            file = files[0];
+
+            if (/^image\/\w+$/.test(file.type)) {
+              blobURL = URL.createObjectURL(file);
+              $image.one('built.cropper', function () {
+
+                // Revoke when load complete
+                URL.revokeObjectURL(blobURL);
+              }).cropper('reset').cropper('replace', blobURL);
+              $inputImage.val('');
+            } else {
+              window.alert('Please choose an image file.');
+            }
+          }
+        });
+      } else {
+        $inputImage.prop('disabled', true).parent().addClass('disabled');
+      }
 
     </script>
 
